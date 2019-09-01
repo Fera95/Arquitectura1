@@ -6,7 +6,7 @@ module ALU_N_bits#(parameter N=32) (input logic [N-1:0] A, B,
 					//flags 3 2 1 0
 					//      Z N C V
 
-					//ALUControl 
+					//ALUControl
 					//0000 suma
 					//0001 resta
 					//0010 and
@@ -17,11 +17,15 @@ module ALU_N_bits#(parameter N=32) (input logic [N-1:0] A, B,
 					//0111 right shift aritmetico
 					//1000 left shift logico
 					//1001 right shift logico
+					//1010 move
+					
 					initial begin
 						flags = 4'b0;
 					end
+					
 					logic cout;
-					logic [N-1:0] suma_R,and_R ,or_R ,not_R ,xor_R , lsl_R, rsl_R, lsa_R, rsa_R, res_Mux;
+					logic [N-1:0] suma_R, and_R, or_R, not_R, xor_R, lsl_R, rsl_R, lsa_R, rsa_R, mov_R, res_Mux;
+					
 					mux_Sumador #(N) mux_S(B,~B,ALUControl,res_Mux); 			// suma y
 					sumador #(N) suma_F(A,res_Mux,ALUControl[0],suma_R,cout);// resta
 					and_A #(N) and_F(A,B,and_R); 										// and
@@ -32,17 +36,14 @@ module ALU_N_bits#(parameter N=32) (input logic [N-1:0] A, B,
 					right_shift_arithmetic #(N) rsa(A,rsa_R); 					// right shift aritmetico
 					left_shift_logic #(N) lsl(A,lsl_R); 							// left shift logico
 					right_shift_logic #(N) rsl(A,rsl_R); 							// right shift logico
+					move_A # (N) mov(A, mov_R);											// move
 					
 					//MUX de la alu
-					mux_ALU #(N) mux_F(suma_R ,suma_R ,and_R ,or_R ,xor_R ,not_R , lsa_R, rsa_R, lsl_R, rsl_R, ALUControl, RESULT);
+					mux_ALU #(N) mux_F(suma_R ,suma_R ,and_R ,or_R ,xor_R ,not_R , lsa_R, rsa_R, lsl_R, rsl_R, mov_R, ALUControl, RESULT);
 					
 					//Calcula las flags
 					flags #(N) flags_F(A,B,suma_R,RESULT,cout,ALUControl,flags);
-					
-					
-											
-											
-											
+						
 											
 endmodule 
 	  

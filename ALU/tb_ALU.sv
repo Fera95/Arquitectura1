@@ -14,31 +14,58 @@ module tb_ALU();
 		end
 	always
 		begin
-			A <= 4'b0001;
+			A <= 4'b0011;
+			B <= 4'b1010;
+			ALUControl <= 4'b0000; //ADD
+			# 10;
+			A <= 4'b1011;
+			B <= 4'b1010;
+			ALUControl <= 4'b0000; //ADD with OF
+			# 10;
+			A <= 4'b1010;
+			B <= 4'b0011;
+			ALUControl <= 4'b0001; // SUB
+			# 10;
+			A <= 4'b0011;
+			B <= 4'b1010;
+			ALUControl <= 4'b0001; // SUB with C
+			# 10;
+			A <= 4'b0011;
+			B <= 4'b1010;
+			ALUControl <= 4'b0010; //AND
+			# 10;
+			A <= 4'b0011;
+			B <= 4'b1010;
+			ALUControl <= 4'b0011; //OR
+			# 10;
+			A <= 4'b0011;
+			B <= 4'b1010;
+			ALUControl <= 4'b0100; //XOR
+			# 10;
+			A <= 4'b0011;
+			B <= 4'b1010;
+			ALUControl <= 4'b0101; //NOT
+			# 10;
+			A <= 4'b0011;
+			B <= 4'b0001;;
+			ALUControl <= 4'b0110; //LSA
+			# 10;
+			A <= 4'b0011;
 			B <= 4'b0001;
-			ALUControl <= 4'b0;
-			# 10;
-			A <= 4'b1111;
+			ALUControl <= 4'b0111; //RSA
+			# 10;			
+			A <= 4'b0011;
 			B <= 4'b0001;
-			ALUControl <= 4'b0;
+			ALUControl <= 4'b1000; //LSL
 			# 10;
-			A <= 4'b0111;
+			A <= 4'b0011;
 			B <= 4'b0001;
-			ALUControl <= 4'b0;
-			# 10;
-			A <= 4'b0001;
-			B <= 4'b0000;
-			ALUControl <= 4'b1;
-			# 10;
-			A <= 4'b0000;
+			ALUControl <= 4'b1001; //RSL
+			# 10;			
+			A <= 4'b0011;
 			B <= 4'b0001;
-			ALUControl <= 4'b1;
+			ALUControl <= 4'b1010; //MOV
 			# 10;
-			A <= 4'b0001;
-			B <= 4'b0001;
-			ALUControl <= 4'b1;
-			# 10;
-		
 		end
 
 endmodule
