@@ -1,0 +1,10 @@
+module ImageCache #(parameter bus = 32)
+	(input logic clk, rst,
+	 input logic [4:0] pos,
+	 input logic [bus-1:0] din,
+	 output logic [bus*4-4:0] dout,
+	 
+	); 
+	
+	
+endmodule
