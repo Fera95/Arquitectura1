@@ -1,0 +1,12 @@
+*
+!.gitattributes
+!.gitignore
+!readme.md
+!.gitkeep
+!*.sv
+!*.py
+!*.jpg
+!*.image
+!*.smf!*.vhd
+!*.s
+!*/
