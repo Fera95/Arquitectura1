@@ -4,7 +4,7 @@ import numpy as np
 import sys
 import os.path
 
-
+bitl = int(sys.argv[1])
 
 def loadImageIntoMatrix(source):
     im = Image.open(source, 'r')
@@ -23,32 +23,41 @@ def loadImageIntoMatrix(source):
 
 
 def decToHex(num):
-    return format(num, '02x')
-    #return format(num, '04x')
-
+    if (bitl == 1): 
+        return format(num, '02x')
+    elif (bitl == 2):
+        return format(num, '04x')
+    else:
+        return format(num, '02x')
 
 def dumpImage(I,dest,w,h):
     f= open(dest,"w+")
     f.write(decToHex(w) + "\n")
     #f.write(decToHex(w + w%2) + "\n")
     f.write(decToHex(h) + "\n")
-    for row in range(0,h):
-        for col in range(0,w): #/2):
-            #mem = decToHex(I[row][col]*256 + I[row][col+1])+ "\n"
-            mem = decToHex(I[row][col])+ "\n"
-    	    f.write(mem)
-	"""
-        if w%2 ==1:
-            mem = decToHex(I[row][col]*256) + "\n"
-            f.write(mem)
-	"""
+    if bitl == 1:
+        for row in range(0,h):
+            for col in range(0,w):
+                mem = decToHex(I[row][col])+ "\n"
+                f.write(mem)
+            if w%2 ==1:
+                mem = decToHex(I[row][col]*256) + "\n"
+                f.write(mem)
+    elif bitl == 2: 
+        for row in range(0,h):
+            for col in range(0,w/2):
+                mem = decToHex(I[row][col]*256 + I[row][col+1])+ "\n"
+                f.write(mem)
+            if w%2 ==1:
+                mem = decToHex(I[row][col]*256) + "\n"
+                f.write(mem)
     f.close()
 
 
 def main():
-    if len(sys.argv) == 3:
-        source = sys.argv[1]
-        dest = sys.argv[2]
+    if len(sys.argv) == 4:
+        source = sys.argv[2]
+        dest = sys.argv[3]
         if (os.path.isfile(source)):
             (I,w,h) = loadImageIntoMatrix(source)
             print("Image size: " +str(w + w%2) + "x"+str(h))
