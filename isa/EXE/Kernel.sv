@@ -7,16 +7,16 @@ module Kernel
 	
 	
 	logic [23:0] row1,row2,row3;
-	
-	assign row1 = cache_in[0];
-	assign row2 = cache_in[1];
-	assign row3 = cache_in[2];
-		
+			
 	logic [15:0] add_row1,add_row2,add_row3,add_rows;
 	
 	logic [15:0] row1_col1,row1_col2,row1_col3;
 	logic [15:0] row2_col1,row2_col2,row2_col3;
 	logic [15:0] row3_col1,row3_col2,row3_col3;
+	
+	
+		logic [15:0] kadd_res [0:8];
+
 	/*
 	K 00 blur
 	K 01 sharpen
@@ -39,6 +39,11 @@ module Kernel
 	*/
 	
 
+	assign row1 = cache_in[0];
+	assign row2 = cache_in[1];
+	assign row3 = cache_in[2];
+
+	
 	assign row1_col1 = {8'b0,row1[7:0]};
 	assign row1_col2 = {8'b0,row1[15:8]};
 	assign row1_col3 = {8'b0,row1[23:16]};
@@ -51,7 +56,6 @@ module Kernel
 	assign row3_col2 = {8'b0,row3[15:8]};
 	assign row3_col3 = {8'b0,row3[23:16]};
 	
-	logic [15:0] kadd_res [0:8];
 
 	assign kadd_res[0] = row1_col1;
 	assign kadd_res[1] = row1_col2;
@@ -72,7 +76,7 @@ module Kernel
 	KernelSharpen     _shrp(kadd_res,sharpen_res);
 	KernelOverSharpen _oshp(kadd_res,oversharpen_res);
 	
-	assign blur_or_sharpen  = (ksel[0])?blur_res:sharpen_res;
+	assign blur_or_sharpen  = (ksel[0])?sharpen_res:blur_res;
 	assign kresult = (ksel[1])?oversharpen_res: blur_or_sharpen;
 
 endmodule
