@@ -32,8 +32,8 @@ def decToHex(num):
 
 def dumpImage(I,dest,w,h):
     f= open(dest,"w+")
-    f.write(decToHex(w) + "\n")
-    #f.write(decToHex(w + w%2) + "\n")
+    #f.write(decToHex(w) + "\n")
+    f.write(decToHex(w + w%2) + "\n")
     f.write(decToHex(h) + "\n")
     if bitl == 1:
         for row in range(0,h):
