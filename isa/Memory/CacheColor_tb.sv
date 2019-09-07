@@ -147,7 +147,11 @@ module CacheColor_tb();
 		#500;
 		
 		
-
+		clk = 1;
+		#500;
+		clk = 0;
+		#500;
+		
 
 
 		
