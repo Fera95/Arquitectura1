@@ -19,4 +19,6 @@ module KernelOverSharpen
 	assign addition = by9-c[0]-c[1]+c[2]-c[3]-c[5]-c[6]-c[7]-c[8];
 	assign kadd_res = (addition>16'hFF)? 16'hFF:addition;
 	
+	
+	
 endmodule
