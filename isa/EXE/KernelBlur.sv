@@ -16,6 +16,6 @@ module KernelBlur
 	logic [15:0] addition;
 	assign addition = c[0]+c[1]+c[2]+c[3]+c[4]+c[5]+c[6]+c[7]+c[8];
 	
-	assign kadd_res = {addition[12:0],3'b0};
+	assign kadd_res = {3'b0,addition[15:3]};
 	
 endmodule
