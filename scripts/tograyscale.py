@@ -4,6 +4,14 @@ import numpy as np
 import sys
 import os.path
 
+bit_len = int(sys.argv[1])
+
+
+"""
+0e0e0e
+0e160e
+0e0e0e
+"""
 
 
 def loadImageIntoMatrix(source):
@@ -46,9 +54,9 @@ def dumpImage(I,dest,w,h):
 
 
 def main():
-    if len(sys.argv) == 3:
-        source = sys.argv[1]
-        dest = sys.argv[2]
+    if len(sys.argv) == 4:
+        source = sys.argv[2]
+        dest = sys.argv[3]
         if (os.path.isfile(source)):
             (I,w,h) = loadImageIntoMatrix(source)
             print("Image size: " +str(w + w%2) + "x"+str(h))
