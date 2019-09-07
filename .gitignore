@@ -1,4 +1,6 @@
 *
+isa/db/*
+isa/*.qsf
 !.gitattributes
 !.gitignore
 !readme.md
