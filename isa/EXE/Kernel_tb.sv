@@ -2,7 +2,7 @@ module Kernel_tb();
 	logic [23:0] cache_in [0:2];
 	logic [1:0]  Ksel;
 	logic [15:0] kresult;
-	Kernel _k(cache_in,ksel,kresult);
+	Kernel _k(cache_in,Ksel,kresult);
 
 	
 	initial begin
