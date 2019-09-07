@@ -1,4 +1,5 @@
 *
+isa/db/*
 !.gitattributes
 !.gitignore
 !readme.md
