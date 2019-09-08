@@ -3,16 +3,24 @@ This module implements the instruction decoder which takes a 32 bits instruction
 its extended immediate as well as its immediate signal
 */
 
-module InstructionDecoder #(parameter bus = 32) (input logic [31:0] instruction, input logic clk, output logic [1:0] FUNTYPE, FUNCODE, output logic [3:0] RS, RX, RD, output logic [bus-1:0] Imm, output logic selWB, selMEMRD, selMEMWR, selCPRS, selCACHEWR, selCACHESH, selBRANCH, selimm);
+module InstructionDecoder #(parameter bus = 32) (
+			input logic [31:0] instruction,  
+			input logic [bus-1:0] WBd, PCi,
+			input logic [3:0] RDwb,
+			input logic WE, clk,
+			output logic [bus-1:0] OPA, OPB, STR_DATA, PCo, RKo, 
+			output logic [3:0] RDo, 
+			output logic [1:0] FUNTYPE, FUNCODE,
+			output logic selWB, selMEMRD, selMEMWR, selCACHEWR, selCACHESH, selBRANCH);
 
 	//Variables declaration for segments of the instruction
-	logic [3:0] RSt;
-	logic [bus-1:0] Imm4, Imm19, Imm28;
+	logic [3:0] RSt, RS, RX;
+	logic [bus-1:0] Imm4, Imm19, Imm28, Imm, OPAt, OPBt;
 	
 	//Assign the bit set to its variables
 	assign FUNTYPE  = instruction[31:30];
 	assign FUNCODE  = instruction[29:28];
-	assign RD = instruction[27:24];
+	assign RDo = instruction[27:24];
 	assign RSt = instruction[23:20];
 	assign RX = instruction[19:16];
 	assign selimm = instruction[0];
@@ -49,12 +57,25 @@ module InstructionDecoder #(parameter bus = 32) (input logic [31:0] instruction,
 	assign selBRANCH = isBranch;
 	
 	//CMP distinc behavior: RD value is copied into RS in order to get the proper OPA and OPB for the comparison as the comparison is RD == RS and RD == Imm
-	assign RS = regWB?RSt:RD;
+	assign RS = regWB?RSt:RDo;
 	
 	//Select the right Imm extended to return according to the function
 	logic [bus-1:0] immTmp;
 	assign immTmp=isReg?Imm19:Imm28;
 	assign Imm=isBranch?immTmp:Imm4;
 	
+	RegisterBank #(32, 4, 16) _regbank(RDwb,RS,RX,4'b1110, WBd, PCi, clk,WE,1'b1, STR_DATA, OPAt,OPBt,RKo,PCo);
+	
+	
+	//flags for correct operand assignment
+	
+	logic isMov, isZero;
+	assign isMov = isReg && FUNCODE[1] && ~FUNCODE[0];
+	assign isZero = isMov || isKernel;
+	
+	assign OPA = isZero?'0:OPAt;
+	
+	assign OPB = selimm?Imm:OPBt;
+		
 		
 endmodule

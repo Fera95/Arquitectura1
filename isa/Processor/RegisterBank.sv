@@ -5,9 +5,9 @@ This module describes a register bank of 14 32-bit general purpose registers, 1 
 module RegisterBank #(parameter bus = 32, dir = 4, reg_num = 2**dir) 
 	(
 		input logic[dir-1:0] RD,RS,RX,RK, input logic[bus-1:0] WB,PCi, //RD value is WB 
-		input logic clk,WE,RE, output logic [bus-1:0] RSd,RXd,RKd,PCo);
+		input logic clk,WE,RE, output logic [bus-1:0] StrReg, RSd,RXd,RKd,PCo);
 
-	logic [bus-1:0] registerBank [0:reg_num-1];
+	logic [31:0] registerBank [0:15];
 
 	initial begin
 		$readmemb("regBnk.txt",registerBank);
@@ -24,6 +24,7 @@ module RegisterBank #(parameter bus = 32, dir = 4, reg_num = 2**dir)
 			RSd <= registerBank[RS];
 			RXd <= registerBank[RX];
 			RKd <= registerBank[RK];
+			StrReg <= registerBank[RD];
 		end
 	end
 	
