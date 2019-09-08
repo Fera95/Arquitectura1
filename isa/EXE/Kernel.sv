@@ -2,7 +2,7 @@ module Kernel
 	(
 	input  logic [23:0] cache_in [0:2],
 	input  logic [1:0]  ksel,
-	output logic [15:0] kresult
+	output logic [31:0] kresult
 	);
 	
 	
@@ -77,6 +77,6 @@ module Kernel
 	KernelOverSharpen _oshp(kadd_res,oversharpen_res);
 	
 	assign blur_or_sharpen  = (ksel[0])?sharpen_res:blur_res;
-	assign kresult = (ksel[1])?oversharpen_res: blur_or_sharpen;
+	assign kresult = {16'b0,(ksel[1])?oversharpen_res: blur_or_sharpen};
 
 endmodule
