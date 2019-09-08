@@ -4,14 +4,15 @@ sub: Addition of OPA and OPB's Two's complement
 cmp: Substraction between OPA and OPB that set the value of Z flag to 1 if they are equal
 mov: Set OPC to the value of OPB, perform via an ADD with OPA set to 0 from a previous stage
 */
-module ALU #(parameter bus = 4) (input logic [bus-1:0] OPA, OPB, input logic [3:0] kernelReG, input logic [15:0] cache, input logic [1:0] FUNTYPE, FUNCODE, output logic [bus-1:0] result,output logic [3:0] CPSR, output logic [bus-1:0] operandB);
+module ALU #(parameter bus = 4) (input logic [bus-1:0] OPA, OPB, input logic [1:0] kernelsel, input logic [23:0] cache [0:2], input logic [1:0] FUNTYPE, FUNCODE, output logic [bus-1:0] result,output logic [3:0] CPSR, output logic [bus-1:0] operandB);
     //variable inits
     logic [bus-1:0] OPC, complement2;//, operandB;  //registers for the Adder
     logic carryOut, selsub, selcmp, selc2, iszero; //signals for the Adder
 		
 	 logic [bus-1:0] KernelUnitResult; //registers for Kernel
-
-	 
+	
+	
+	 //Kernel() _kernel(cache_in, ksel, KernelUnitResult); //UNCOMMENT THIS LINE TO HAVE A WORKING KERNEL IN EXECUTION
     //varible assignments for adder
     assign selsub = ~FUNCODE[1] && FUNCODE[0]; //01
     assign selcmp = FUNCODE[1] && ~FUNCODE[0]; //10
