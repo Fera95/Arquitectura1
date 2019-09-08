@@ -8,6 +8,7 @@ isa/*.qsf
 !*.sv
 !*.py
 !compiler/*
+!compiler/*/*
 !*.jpg
 !*.image
 !*.smf!*.vhd
