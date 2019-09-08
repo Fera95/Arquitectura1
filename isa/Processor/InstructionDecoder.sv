@@ -16,6 +16,7 @@ module InstructionDecoder #(parameter bus = 32) (
 	//Variables declaration for segments of the instruction
 	logic [3:0] RSt, RS, RX;
 	logic [bus-1:0] Imm4, Imm19, Imm28, Imm, OPAt, OPBt;
+	logic selimm;
 	
 	//Assign the bit set to its variables
 	assign FUNTYPE  = instruction[31:30];
@@ -51,7 +52,6 @@ module InstructionDecoder #(parameter bus = 32) (
 	assign selWB = regWB || memWB || isBranch || kerWB;
 	assign selMEMRD = isMem && ~FUNCODE[1] && ~FUNCODE[0];
 	assign selMEMWR = isMem && ~FUNCODE[1] && FUNCODE[0];
-	assign selCPRS = isReg && FUNCODE[1] && FUNCODE[0];
 	assign selCACHEWR = isKernel && ~ FUNCODE[1] && FUNCODE[0];
 	assign selCACHESH = isKernel && ~ FUNCODE[1] && FUNCODE[1];
 	assign selBRANCH = isBranch;
