@@ -4,7 +4,7 @@ module CacheColor
 		input  logic clk,
 		input  logic rst,
 		input  logic WE,
-		input  logic [15:0] di,
+		input  logic [32:0] di,
 		input  logic [ 2:0] address,
 		output logic [23:0] cache_out [0:2]
 	);
@@ -26,7 +26,7 @@ module CacheColor
 			
 		end
 		else if (WE && ~SH)begin 
-			cache[address] <= di;
+			cache[address] <= di[15:0];
 		end
 		cache_out[0] <= {cache[0],cache[1][15:8]}; 
 		cache_out[1] <= {cache[2],cache[3][15:8]}; 
