@@ -26,31 +26,31 @@ def decToHex(num):
     if (bitl == 1): 
         return format(num, '02x')
     elif (bitl == 2):
-        return format(num, '04x')
+        return format(num, '02x')
     else:
         return format(num, '02x')
 
 def dumpImage(I,dest,w,h):
     f= open(dest,"w+")
     #f.write(decToHex(w) + "\n")
-    f.write(decToHex(w + w%2) + "\n")
-    f.write(decToHex(h) + "\n")
+    #f.write(decToHex(w + w%2) + "\n")
+    #f.write(decToHex(h) + "\n")
     if bitl == 1:
         for row in range(0,h):
             for col in range(0,w):
                 mem = decToHex(I[row][col])+ "\n"
                 f.write(mem)
             if w%2 ==1:
-                mem = decToHex(I[row][col]*256) + "\n"
+                mem = decToHex(I[row][col]) + "\n"
                 f.write(mem)
     elif bitl == 2: 
+        print("type 2")
         for row in range(0,h):
-            for col in range(0,w/2):
-                mem = decToHex(I[row][col]*256 + I[row][col+1])+ "\n"
+            col = 0
+            while (col < w):
+                mem = decToHex(I[row][col]) + decToHex(I[row][col+1]) + "\n"
                 f.write(mem)
-            if w%2 ==1:
-                mem = decToHex(I[row][col]*256) + "\n"
-                f.write(mem)
+                col = col + 2
     f.close()
 
 
