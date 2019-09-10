@@ -1,6 +1,10 @@
 module Top_unit_tb();
   
   /*
+  
+  SE DEBE CREAR UNA UNIDAD DE CONTROL
+  
+  
   ControlUnit (input logic clk, reset,
 						  input logic [31:12] Instr,
 						  input logic [3:0] ALUFlags,
@@ -72,7 +76,8 @@ RegWrite). Afectado por ejecucion condicional
     //ADD R0, R0, #42
     //Instrucciones a probar
     
-    //E04F000F
+    //poner instruccion en HEXA y desplegarla , aquí se prueba que la
+	 // unidad de control de las banderas deseadas
       Instru =32'b1110_000_0010_0_1111_0000_0000_0000_1111; #100;
     $display("Valindando: E04F000F");
     
@@ -461,7 +466,7 @@ $display("Valindando: E5837054");
     assert(MemtoReg == 1'b1) $display("	Instruction/MemtoReg"); else $error("	ERROR Instruction/MemtoReg");
     assert(PCSrc == 1'b0) $display("	Instruction/PCSrc"); else $error("	ERROR Instruction/PCSrc");
 	 
-	//Instrucciones Nuestras
+	
 	// 
     
   end
