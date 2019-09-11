@@ -41,7 +41,7 @@ $readmemh("Tb_cache.txt", cache);
 initial begin	
 	
 
-	/*ADD sin carry*/
+	/*ADD*/
 	 OPA = 4'b0010;
 	 OPB = 4'b0001;
 	 FUNTYPE = 2'b00;
@@ -52,18 +52,8 @@ initial begin
    assert(result == 3'b011) $display("ADD1/result Correcto"); else $error("	ERROR ADD1/result");
 	
 	
-	/*ADD con carry*/
-	 OPA = 4'b0111;
-	 OPB = 4'b0111;
-	 FUNTYPE = 2'b00;
-	 FUNCODE = 2'b00;	
-	 
-	 kernelReg = 2'b00;#100;
-	$display(" Valindando:ADD2 ");
-	assert(result == 4'b1110) $display("ADD2/result Correcto"); else $error("	ERROR ADD2/result");
-   assert(CPSR == 4'b1000) $display("ADD2/Carry Correcto"); else $error("	ERROR ADD2/Carry");
 	
-	/*SUB sin negativo */
+	/*SUB sin cero */
 	 OPA = 4'b0011;
 	 OPB = 4'b0001;
 	 FUNTYPE = 2'b00;
@@ -72,8 +62,18 @@ initial begin
 	 kernelReg = 2'b00; #100;
 	$display(" Valindando:SUB1 ");
    assert(result == 4'b0010) $display("SUB1/result Correcto"); else $error("	ERROR SUB1/result");
+	assert(CPSR[0] == 1'b0) $display("SUB1/Cero Correcto"); else $error("	ERROR SUB1/Cero");
 	
-	/*SUB con negativo (chequear banderas)*/
+	/*SUB con cero */
+	 OPA = 4'b0011;
+	 OPB = 4'b0011;
+	 FUNTYPE = 2'b00;
+	 FUNCODE = 2'b01;	
+	 
+	 kernelReg = 2'b00; #100;
+	$display(" Valindando:SUB2 ");
+   assert(result == 4'b0000) $display("SUB2/result Correcto"); else $error("	ERROR SUB2/result");
+	assert(CPSR[0] == 1'b1) $display("SUB2/Cero Correcto"); else $error("	ERROR SUB2/Cero");
 end	
 	
 endmodule
