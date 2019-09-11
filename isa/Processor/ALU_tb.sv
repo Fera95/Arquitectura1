@@ -41,9 +41,9 @@ $readmemh("Tb_cache.txt", cache);
 initial begin	
 	
 
-
-	 OPA = 3'b010;
-	 OPB = 3'b001;
+	/*ADD sin carry*/
+	 OPA = 4'b0010;
+	 OPB = 4'b0001;
 	 FUNTYPE = 2'b00;
 	 FUNCODE = 2'b00;	
 	 
@@ -52,18 +52,28 @@ initial begin
    assert(result == 3'b011) $display("ADD1/result Correcto"); else $error("	ERROR ADD1/result");
 	
 	
-	
-	 OPA = 3'b111;
-	 OPB = 3'b111;
+	/*ADD con carry*/
+	 OPA = 4'b0111;
+	 OPB = 4'b0111;
 	 FUNTYPE = 2'b00;
 	 FUNCODE = 2'b00;	
 	 
 	 kernelReg = 2'b00;#100;
 	$display(" Valindando:ADD2 ");
-	assert(result == 4'b1110) $display("ADD2/result Correcto"); else $error("	ERROR ADD1/result");
+	assert(result == 4'b1110) $display("ADD2/result Correcto"); else $error("	ERROR ADD2/result");
    assert(CPSR == 4'b1000) $display("ADD2/Carry Correcto"); else $error("	ERROR ADD2/Carry");
 	
+	/*SUB sin negativo */
+	 OPA = 4'b0011;
+	 OPB = 4'b0001;
+	 FUNTYPE = 2'b00;
+	 FUNCODE = 2'b01;	
+	 
+	 kernelReg = 2'b00; #100;
+	$display(" Valindando:SUB1 ");
+   assert(result == 4'b0010) $display("SUB1/result Correcto"); else $error("	ERROR SUB1/result");
 	
+	/*SUB con negativo (chequear banderas)*/
 end	
 	
 endmodule
