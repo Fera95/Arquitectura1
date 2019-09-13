@@ -38,25 +38,21 @@ initial begin
 
 		
 		RDwb = 4'b1000; //r8
-		WBd = 32'b0000000000000000000000000000000011;
-		PCi = 32'b0000000000000000000000000000001100;
+		WBd = 32'b00000000000000000000000000000011;
+		PCi = 32'b00000000000000000000000000001100;
 		WE = 1'b1;
 				
-		instruction = 32'b00100001000100110000000000000000;#100;//suma
-	   $display("ADD");
-      /*assert() $display("ADD/OPA Correcto"); else $error("ERROR ADD/OPA");
-		assert() $display("ADD/OPB Correcto"); else $error("ERROR ADD/OPB");
-		assert() $display("ADD/STR_DATA Correcto"); else $error("ERROR ADD/STR_DATA");
-		assert() $display("ADD/PCo Correcto"); else $error("ERROR ADD/PCo");
-		assert() $display("ADD/RKo Correcto"); else $error("ERROR ADD/RKo");
-		assert() $display("ADD/RDo Correcto"); else $error("ERROR ADD/RDo");
-		assert() $display("ADD/FUNTYPE Correcto"); else $error("ERROR ADD/FUNTYPE");
-		assert() $display("ADD/FUNCODE Correcto"); else $error("ERROR ADD/FUNCODE");
-		assert() $display("ADD/selWB Correcto"); else $error("ERROR ADD/selWB");
-		assert() $display("ADD/selMEMRD Correcto"); else $error("ERROR ADD/selMEMRD");
-		assert() $display("ADD/selCACHEWR Correcto"); else $error("ERROR ADD/selCACHEWR");
-		assert() $display("ADD/selCACHESH Correcto"); else $error("ERROR ADD/selCACHESH");
-		assert() $display("ADD/selBRANCH Correcto"); else $error("ERROR ADD/selBRANCH");*/
+		instruction = 32'b00_00_0001_0001_0010_000000000000000_0;#100;//suma sin immediato
+	   $display("ADD sin inmediato");
+      assert(OPA==4'b0001) $display("ADD/OPA Correcto"); else $error("ERROR ADD/OPA");
+		assert(OPB==4'b0001) $display("ADD/OPB Correcto"); else $error("ERROR ADD/OPB");
+		assert(FUNTYPE== 2'b00) $display("ADD/FUNTYPE Correcto"); else $error("ERROR ADD/FUNTYPE");
+		assert(FUNCODE== 2'b00) $display("ADD/FUNCODE Correcto"); else $error("ERROR ADD/FUNCODE");
+		assert(selWB== 1'b1 ) $display("ADD/selWB Correcto"); else $error("ERROR ADD/selWB");
+		assert(selMEMRD ==  1'b0) $display("ADD/selMEMRD Correcto"); else $error("ERROR ADD/selMEMRD");
+		assert(selCACHEWR ==  1'b0) $display("ADD/selCACHEWR Correcto"); else $error("ERROR ADD/selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("ADD/selCACHESH Correcto"); else $error("ERROR ADD/selCACHESH");
+		assert(selBRANCH ==  1'b0) $display("ADD/selBRANCH Correcto"); else $error("ERROR ADD/selBRANCH");
 		
 	
 end	
