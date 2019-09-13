@@ -42,19 +42,182 @@ initial begin
 		PCi = 32'b00000000000000000000000000001100;
 		WE = 1'b1;
 				
-		instruction = 32'b00_00_0001_0001_0010_000000000000000_0;#100;//suma sin immediato
-	   $display("ADD sin inmediato");
-      assert(OPA==4'b0001) $display("ADD/OPA Correcto"); else $error("ERROR ADD/OPA");
-		assert(OPB==4'b0001) $display("ADD/OPB Correcto"); else $error("ERROR ADD/OPB");
-		assert(FUNTYPE== 2'b00) $display("ADD/FUNTYPE Correcto"); else $error("ERROR ADD/FUNTYPE");
-		assert(FUNCODE== 2'b00) $display("ADD/FUNCODE Correcto"); else $error("ERROR ADD/FUNCODE");
-		assert(selWB== 1'b1 ) $display("ADD/selWB Correcto"); else $error("ERROR ADD/selWB");
-		assert(selMEMRD ==  1'b0) $display("ADD/selMEMRD Correcto"); else $error("ERROR ADD/selMEMRD");
-		assert(selCACHEWR ==  1'b0) $display("ADD/selCACHEWR Correcto"); else $error("ERROR ADD/selCACHEWR");
-		assert(selCACHESH ==  1'b0) $display("ADD/selCACHESH Correcto"); else $error("ERROR ADD/selCACHESH");
-		assert(selBRANCH ==  1'b0) $display("ADD/selBRANCH Correcto"); else $error("ERROR ADD/selBRANCH");
+		instruction = 32'b00_00_0001_0001_0010_000000000000000_0;#100;//suma 
+	   $display("ADD");
+  
+		assert(FUNTYPE== 2'b00) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b00) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
 		
+		assert(selWB== 1'b1 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b0) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b0) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b0) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b0) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
+		
+		
+		instruction = 32'b00_01_0001_0001_0010_000000000000000_0;#100;//resta
+	   $display("SUB");
+     
+		assert(FUNTYPE== 2'b00) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b01) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
+		
+		assert(selWB== 1'b1 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b0) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b0) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b0) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b0) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
 	
+	
+		instruction = 32'b00_10_0001_0001_0010_000000000000000_0;#100;//Move
+	   $display("MOV");
+     
+		assert(FUNTYPE== 2'b00) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b10) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
+		
+		assert(selWB== 1'b1 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b0) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b0) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b0) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b0) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
+		
+		instruction = 32'b00_11_0001_0001_0010_000000000000000_0;#100;//Compare
+	   $display("CMP");
+      
+		assert(FUNTYPE== 2'b00) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b11) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
+		
+		assert(selWB== 1'b0 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b0) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b0) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b0) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b0) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
+		
+		instruction = 32'b01_00_0001_0001_0010_000000000000000_0;#100;//LDR
+	   $display("LDR");
+      
+		assert(FUNTYPE== 2'b01) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b00) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
+		
+		assert(selWB== 1'b1 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b1) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b0) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b0) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b0) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
+		
+		
+		instruction = 32'b01_01_0001_0001_0010_000000000000000_0;#100;//STR
+	   $display("STR");
+     
+		assert(FUNTYPE== 2'b01) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b01) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
+		
+		assert(selWB== 1'b0 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b0) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b1) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b0) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b0) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
+		
+		instruction = 32'b10_00_0001_0001_0010_000000000000000_0;#100;//B
+	   $display("B");
+      
+		assert(FUNTYPE== 2'b10) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b00) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
+		
+		assert(selWB== 1'b1 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b0) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b0) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b0) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b1) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
+		
+		
+		instruction = 32'b10_01_0001_0001_0010_000000000000000_0;#100;//BEQ
+	   $display("BEQ");
+     
+		assert(FUNTYPE== 2'b10) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b01) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
+		
+		assert(selWB== 1'b1 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b0) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b0) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b0) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b1) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
+		
+		
+		instruction = 32'b11_00_0001_0001_0010_000000000000000_0;#100;//KRN
+	   $display("KRN");
+      
+		assert(FUNTYPE== 2'b11) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b00) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
+		
+		assert(selWB== 1'b1 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b0) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b0) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b0) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b0) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
+		
+		
+		instruction = 32'b11_01_0001_0001_0010_000000000000000_0;#100;//LKN
+	   $display("LKN");
+      
+		assert(FUNTYPE== 2'b11) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b01) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
+		
+		assert(selWB== 1'b0 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b0) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b0) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b1) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b0) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
+		
+		
+		instruction = 32'b11_10_0001_0001_0010_000000000000000_0;#100;//LDK
+	   $display("LDK");
+      
+		assert(FUNTYPE== 2'b11) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b10) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
+		
+		assert(selWB== 1'b1 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b0) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b0) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b0) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b0) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b0) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
+		
+		instruction = 32'b11_11_0001_0001_0010_000000000000000_0;#100;//SHK
+	   $display("SHK");
+      
+		assert(FUNTYPE== 2'b11) $display("FUNTYPE Correcto"); else $error("ERROR FUNTYPE");
+		assert(FUNCODE== 2'b11) $display("FUNCODE Correcto"); else $error("ERROR FUNCODE");
+		
+		assert(selWB== 1'b0 ) $display("selWB Correcto"); else $error("ERROR selWB");
+		assert(selMEMRD ==  1'b0) $display("selMEMRD Correcto"); else $error("ERROR selMEMRD");
+		assert(selMEMWR ==  1'b0) $display("selMEMWR Correcto"); else $error("ERROR selMEMWR");
+		
+		assert(selCACHEWR ==  1'b0) $display("selCACHEWR Correcto"); else $error("ERROR selCACHEWR");
+		assert(selCACHESH ==  1'b1) $display("selCACHESH Correcto"); else $error("ERROR selCACHESH");
+		assert(selBRANCH ==  1'b0) $display("selBRANCH Correcto"); else $error("ERROR  selBRANCH");
+		
+		
 end	
 			
 endmodule
