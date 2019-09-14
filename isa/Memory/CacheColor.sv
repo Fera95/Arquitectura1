@@ -4,7 +4,7 @@ module CacheColor
 		input  logic clk,
 		input  logic rst,
 		input  logic WE,
-		input  logic [32:0] di,
+		input  logic [31:0] di,
 		input  logic [ 2:0] address,
 		output logic [23:0] cache_out [0:2]
 	);

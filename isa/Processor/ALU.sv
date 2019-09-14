@@ -10,9 +10,8 @@ module ALU #(parameter bus = 4) (input logic [bus-1:0] OPA, OPB, input logic [1:
     logic carryOut, selsub, selcmp, selc2, iszero; //signals for the Adder
 		
 	 logic [bus-1:0] KernelUnitResult; //registers for Kernel
-	
-	
 	 //Kernel() _kernel(cache_in, ksel, KernelUnitResult); //UNCOMMENT THIS LINE TO HAVE A WORKING KERNEL IN EXECUTION
+	 
     //varible assignments for adder
     assign selsub = ~FUNCODE[1] && FUNCODE[0]; //01
     assign selcmp = FUNCODE[1] && ~FUNCODE[0]; //10
@@ -31,8 +30,11 @@ module ALU #(parameter bus = 4) (input logic [bus-1:0] OPA, OPB, input logic [1:
 	Mux2 #(bus) _selector (OPC, KernelUnitResult, executiondecoder, result);
 	
 	
+	 Kernel _mykernel(cache,kernelsel,KernelUnitResult);
+	
+	
 	//PLACEHOLDER: ERASE ONCE KERNEL UNIT IS COMPLETED
-	assign KernelUnitResult = '0;
+	//assign KernelUnitResult = '0;
 	
 	
 endmodule

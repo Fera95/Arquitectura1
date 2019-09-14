@@ -1,4 +1,4 @@
-module Pipeline #(parameter bus = 16, dir = 4, reg_num = 2**dir) 
+module Pipeline #(parameter bus = 16) 
 	(
         input logic clk,
 		input logic[bus-1:0] Input,

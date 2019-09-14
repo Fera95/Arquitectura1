@@ -64,7 +64,9 @@ module InstructionDecoder #(parameter bus = 32) (
 	assign immTmp=isReg?Imm19:Imm28;
 	assign Imm=isBranch?immTmp:Imm4;
 	
-	RegisterBank #(32, 4, 16) _regbank(RDwb,RS,RX,4'b1110, WBd, PCi, clk,WE,1'b1, STR_DATA, OPAt,OPBt,RKo,PCo);
+	logic [bus-1:0] pcOut;
+	
+	RegisterBank #(32, 4, 16) _regbank(RDwb,RS,RX,4'b1110, WBd, PCi, clk,WE,1'b1, STR_DATA, OPAt,OPBt,RKo,pcOut);
 	
 	
 	//flags for correct operand assignment
@@ -78,4 +80,8 @@ module InstructionDecoder #(parameter bus = 32) (
 	assign OPB = selimm?Imm:OPBt;
 		
 		
+		
+	BranchUnit #(bus,bus) _branchUnit(PCi,OPB,selBRANCH,PCo);
+	
+	
 endmodule
