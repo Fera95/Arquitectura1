@@ -33,13 +33,13 @@ logic read_enable  = 1;
 	
 
 
-ImageMemory dut(sum,c_out,a,b,c_in);
+ImageMemory dut(clk,enable,write_enable,read_enable, address,input_data,output_data);
 
 
 initial begin
    clk = 1;
-	a=4'b0000; b=4'b0000; c_in=0; #10;
-	assert(sum===4'b0000 && c_out===0 ) $display ("0000 ok"); else $error("0000 failed");
+//	a=4'b0000; b=4'b0000; c_in=0; #10;
+//	assert(sum===4'b0000 && c_out===0 ) $display ("0000 ok"); else $error("0000 failed");
 
 
 

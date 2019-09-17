@@ -12,9 +12,19 @@ module CacheColor
 	logic [15:0] cache [0:5];
 	
 	
-	always_ff @(posedge clk)begin
+	always_ff @(negedge clk)begin
 	
-		if (SH == 1) begin
+		if (rst) begin
+			cache[0] <= 16'd0; 
+			cache[1] <= 16'd0; 
+			cache[2] <= 16'd0;
+			cache[3] <= 16'd0;
+			cache[4] <= 16'd0;
+			cache[5] <= 16'd0;
+		
+		end
+	
+		else if (SH == 1) begin
 			cache[1] <= {cache[1][7:0],8'd0};
 			cache[0] <= {cache[0][7:0],cache[1][15:8]};
 			

@@ -1,3 +1,4 @@
+`include "ProcessorStructs.sv" 
 
 module Processor 
 //idpl : InstructionDecodePipeLine
@@ -34,6 +35,9 @@ module Processor
 
 	
 	
+	forwardcollection _fwcollection;
+	
+	
 	//Fetch Instruction
 	
 	Pipeline #(ibus) _fetch_deco(clk,instruction,instructionp);
@@ -41,7 +45,7 @@ module Processor
 
 	//Decoding instruction
 	
-	InstructionDecoder #(rbus) _decoder(instructionp, WBd, PCi,RDwb,WE, clk, OPA, OPB, STR_DATA, PCo, RKo, RDo, FUNTYPE, FUNCODE, selWB, selMEMRD, selMEMWR, selCACHEWR, selCACHESH, selBRANCH);
+	InstructionDecoder #(rbus) _decoder(instructionp, WBd, PCi,RDwb,WE, clk, OPA, OPB, STR_DATA, PCo, RKo, RDo, FUNTYPE, FUNCODE, selWB, selMEMRD, selMEMWR, selCACHEWR, selCACHESH, selBRANCH,_fwcollection);
 	
 	assign PCi = pcDir;
 	assign PCout = PCo;
@@ -95,6 +99,11 @@ module Processor
 		operandB
 	);
 	
+	
+	assign _fwcollection.exephase.RD = _idpipeo.RDo;
+	assign _fwcollection.exephase.forwardData = result;
+	assign _fwcollection.exephase.selWB = _idpipeo.selWB;
+	
 	execpipe _execpipe,_execpipeo;
 	
 	assign _execpipe.ExecResult = result;
@@ -121,18 +130,18 @@ module Processor
 	assign MWE = _execpipeo.selMEMWR;
 	assign MRE = _execpipeo.selMEMRD;
 	
-
 		
 	//Revisar direccion del cache como operandB
-	CacheColor (
-		_execpipeo.selCACHESH,clk,rst,_execpipeo.selCACHEWR,_execpipeo.ExecResult,
+	CacheColor _cache(
+		_execpipeo.selCACHESH,clk,rst,_execpipeo.selCACHEWR,_execpipeo.STR_DATA,
 		_execpipeo.operandB,cacheMem
 	);
 	
 	
 	//Memory Writeback Pipeline
 	
-	mempipe _mempipe,_mempipeo;
+	mempipe _mempipe;
+	mempipe _mempipeo;
 
 	assign _mempipe.ExecResult = _execpipeo.ExecResult;
 	assign _mempipe.RDo = _execpipeo.RDo ;
@@ -143,14 +152,33 @@ module Processor
 	assign _mempipe.operandB = _execpipeo.operandB ;
 	
 	
+	
+	
+	assign _fwcollection.memphase.RD = _execpipeo.RDo;
+	assign _fwcollection.memphase.forwardData = (_execpipeo.selMEMRD)?_mempipe.loadedData:_execpipeo.ExecResult;
+	assign _fwcollection.memphase.selWB = _execpipeo.selWB;
+	
+	
+	
 	MemWriteBackPipeline _mem_wb(clk,_mempipe, _mempipeo);
+	
+	
+	
+	
+	assign _fwcollection.wbphase.RD = _mempipeo.RDo;
+	assign _fwcollection.wbphase.forwardData = WBd;
+	assign _fwcollection.wbphase.selWB = _mempipeo.selWB;
+	
+	
 	
 	//Writeback
 	
 	//si no se entiende el diagrama documentar estas lineas
 	assign WBd = (_mempipeo.selMEMRD)?_mempipeo.loadedData:_mempipeo.ExecResult;
-	assign WE = selWB;
+	assign WE = _mempipeo.selWB;
 	assign RDwb = _mempipeo.RDo;
+	
+	
 	
 endmodule
 

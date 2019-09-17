@@ -1,3 +1,5 @@
+`include "ProcessorStructs.sv" 
+
 module DecoExecPipeline 
 	(input logic clk, input idpipe i, output idpipe o);
 	

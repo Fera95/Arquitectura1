@@ -14,7 +14,7 @@ module ALU #(parameter bus = 4) (input logic [bus-1:0] OPA, OPB, input logic [1:
 	 
     //varible assignments for adder
     assign selsub = ~FUNCODE[1] && FUNCODE[0]; //01
-    assign selcmp = FUNCODE[1] && ~FUNCODE[0]; //10
+    assign selcmp = FUNCODE[1] && FUNCODE[0]; //11. Bug FIX: funcode 10 by 11 
     assign selc2 = selsub | selcmp; //two´s complement if it a substraction or comparation
     assign operandB = selc2?complement2:OPB; 
 

@@ -1,3 +1,5 @@
+`include "ProcessorStructs.sv" 
+
 module MemWriteBackPipeline 
 	(input logic clk, input mempipe i, output mempipe o);
 	

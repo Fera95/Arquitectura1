@@ -1,3 +1,7 @@
+`ifndef _Processor_Structs_
+`define _Processor_Structs_
+
+
 localparam rbus = 32;
 localparam mbus = 32;
 typedef struct packed{
@@ -47,3 +51,24 @@ typedef struct packed{
 	logic selBRANCH;
 	logic [mbus-1:0] loadedData;
 }mempipe;
+
+
+
+
+
+typedef struct packed{
+	logic selWB;
+	logic [3:0] RD;
+	logic [rbus-1:0] forwardData;
+
+}forwardphase;
+
+
+
+typedef struct packed{
+	forwardphase  wbphase;
+	forwardphase memphase;
+	forwardphase exephase;
+}forwardcollection;
+
+`endif

@@ -1,3 +1,5 @@
+`include "ProcessorStructs.sv" 
+
 module ExecMemPipeline 
 	(input logic clk, input execpipe i, output execpipe o);
 	

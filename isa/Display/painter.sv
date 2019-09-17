@@ -56,7 +56,7 @@ module painter
 	 vgaController v0(o_clk, o_rst, o_hs, o_vs, o_sync, o_blank, x, y);
 	 
 	 
-	logic hRstF, vRstF, hDS, hDE, vDS, vDE,hDE256, vDE256, vDE256E= 0;
+	logic hRstF, vRstF, hDS, hDE, vDS, vDE,hDE256, vDE256, hDE256E= 0;
 	//	Blank Comparator
 	comparator#(10) hDisplayStartComparator(.a(x), .b(HSS), .gte(hDS));
 	comparator#(10) hDisplayStartComparator2(.a(x), .b(HSSX), .lt(hDE256));

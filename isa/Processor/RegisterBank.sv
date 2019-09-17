@@ -10,26 +10,29 @@ module RegisterBank #(parameter bus = 32, dir = 4, reg_num = 2**dir)
 	logic [31:0] registerBank [0:15];
 
 	initial begin
-		$readmemb("regBnk.txt",registerBank);
+		$readmemh("regBnk.txt",registerBank);
 	end
+//	
+//	//always_ff is not used because the book recomends not to use flip-flops
+//	//SRAMs are more compact than flipflops
+//	always_ff @(posedge clk) begin
+//		// Use RE to indicate a valid RD is on the 
+//		//line and read the memory into a register at that RD 
+//		// when RE is asserted
+//		
+//		//end
+//	end
+//	
 	
-	//always_ff is not used because the book recomends not to use flip-flops
-	//SRAMs are more compact than flipflops
-	always @(posedge clk) begin
-		// Use RE to indicate a valid RD is on the 
-		//line and read the memory into a register at that RD 
-		// when RE is asserted
+	always_ff @(negedge clk) begin
+	
 		PCo <= registerBank[15];
-		if (RE == 1'b1) begin
+		//if (RE == 1'b1) begin
 			RSd <= registerBank[RS];
 			RXd <= registerBank[RX];
 			RKd <= registerBank[RK];
 			StrReg <= registerBank[RD];
-		end
-	end
 	
-	
-	always @(negedge clk) begin
 		registerBank[15] <= PCi;
 		if (WE == 1'b1) begin
 			registerBank[RD] <= WB;
