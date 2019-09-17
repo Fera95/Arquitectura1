@@ -87,6 +87,19 @@ module Processor
 	assign cacheExec[1] = _idpipeo.CacheB;
 	assign cacheExec[2] = _idpipeo.CacheC;
 	
+	
+	/*
+	module ALU #(parameter bus = 4) (
+	input logic [bus-1:0] OPA, OPB, 
+	input logic [1:0] kernelsel, 
+	input logic [23:0] cache [0:2], 
+	input logic [1:0] FUNTYPE, FUNCODE, 
+	output logic [bus-1:0] result,
+	output logic [3:0] CPSR, 
+	output logic [bus-1:0] operandB);
+	*/
+	
+	
 	ALU #(rbus) _alu (
 		_idpipeo.OPA, 
 		_idpipeo.OPB,
