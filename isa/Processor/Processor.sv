@@ -18,11 +18,11 @@ module Processor
 	logic [ibus-1:0] instructionp;
 	
 	logic [1:0] FUNTYPE, FUNCODE;
-	logic [3:0] RDwb;
+	logic [3:0] RopA,RopB,RDwb;
 	logic [31:0] WBd, PCi;
 	logic [31:0] OPA, OPB, STR_DATA, PCo, RKo;
 	logic [3:0] RDo;
-	logic selWB, selMEMRD, selMEMWR, selCPRS, selCACHEWR, selCACHESH, selBRANCH,WE;
+	logic RopAIsReg,RopBIsReg,selWB, selMEMRD, selMEMWR, selCPRS, selCACHEWR, selCACHESH, selBRANCH,WE;
 
 	logic [23:0] cacheDeco [0:2];
 	logic [23:0] cacheMem [0:2];
@@ -40,12 +40,12 @@ module Processor
 	
 	//Fetch Instruction
 	
-	Pipeline #(ibus) _fetch_deco(clk,instruction,instructionp);
+	Pipeline #(ibus) _fetch_deco(clk,rst,instruction,instructionp);
 	
 
 	//Decoding instruction
 	
-	InstructionDecoder #(rbus) _decoder(instructionp, WBd, PCi,RDwb,WE, clk, OPA, OPB, STR_DATA, PCo, RKo, RDo, FUNTYPE, FUNCODE, selWB, selMEMRD, selMEMWR, selCACHEWR, selCACHESH, selBRANCH,_fwcollection);
+	InstructionDecoder #(rbus) _decoder(instructionp, WBd, PCi,RDwb,WE, clk, OPA, OPB, STR_DATA, PCo, RKo, RopA,RopB,RDo,RopAIsReg,RopBIsReg, FUNTYPE, FUNCODE, selWB, selMEMRD, selMEMWR, selCACHEWR, selCACHESH, selBRANCH,_fwcollection);
 	
 	assign PCi = pcDir;
 	assign PCout = PCo;
@@ -55,6 +55,10 @@ module Processor
 	assign _idpipe.OPB = OPB;
 	assign _idpipe.STR_DATA = STR_DATA;
 	assign _idpipe.RDo = RDo;
+	assign _idpipe.RopA = RopA;
+	assign _idpipe.RopB = RopB;
+	assign _idpipe.RopAIsReg = RopAIsReg;
+	assign _idpipe.RopBIsReg = RopBIsReg;
 	assign _idpipe.RKo = RKo;
 	assign _idpipe.FUNTYPE = FUNTYPE;
 	assign _idpipe.FUNCODE = FUNCODE;
@@ -77,7 +81,7 @@ module Processor
 
 	//Decoding Execution pipeline
 	
-	DecoExecPipeline _deco(clk,_idpipe, _idpipeo);
+	DecoExecPipeline _deco(clk,rst,_idpipe, _idpipeo);
 	
 	
 	//Execution
@@ -87,7 +91,7 @@ module Processor
 	assign cacheExec[1] = _idpipeo.CacheB;
 	assign cacheExec[2] = _idpipeo.CacheC;
 	
-	
+	logic [rbus-1:0] OpAFwExe,OpBFwExe;
 	/*
 	module ALU #(parameter bus = 4) (
 	input logic [bus-1:0] OPA, OPB, 
@@ -99,11 +103,10 @@ module Processor
 	output logic [bus-1:0] operandB);
 	*/
 	
-	
 	ALU #(rbus) _alu (
-		_idpipeo.OPA, 
-		_idpipeo.OPB,
-		_idpipeo.RKo, 
+		OpAFwExe, OpBFwExe,
+		//_idpipeo.OPA,_idpipeo.OPB,
+		_idpipeo.RKo[1:0], 
 		cacheExec, 
 		_idpipeo.FUNTYPE, 
 		_idpipeo.FUNCODE, 
@@ -111,6 +114,12 @@ module Processor
 		CPSR,
 		operandB
 	);
+
+	
+	
+
+	ForwardUnitCell #(rbus) _fw_exec(_fwcollection.memphase, _idpipeo.RopA,_idpipeo.RopB,
+	_idpipeo.OPA,_idpipeo.OPB,	OpAFwExe,OpBFwExe);
 	
 	
 	assign _fwcollection.exephase.RD = _idpipeo.RDo;
@@ -134,7 +143,7 @@ module Processor
 
 	//Execution Memory Pipeline
 	
-	ExecMemPipeline _exec_mem(clk,_execpipe, _execpipeo);
+	ExecMemPipeline _exec_mem(clk,rst,_execpipe, _execpipeo);
 
 	//Memory
 	
@@ -173,7 +182,9 @@ module Processor
 	
 	
 	
-	MemWriteBackPipeline _mem_wb(clk,_mempipe, _mempipeo);
+	
+	
+	MemWriteBackPipeline _mem_wb(clk,rst,_mempipe, _mempipeo);
 	
 	
 	

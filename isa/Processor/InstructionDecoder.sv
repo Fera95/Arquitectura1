@@ -11,7 +11,8 @@ module InstructionDecoder #(parameter bus = 32) (
 			input logic [3:0] RDwb,
 			input logic WE, clk,
 			output logic [bus-1:0] OPA, OPB, STR_DATA, PCo, RKo, 
-			output logic [3:0] RDo, 
+			output logic [3:0] RopA,RopB,RDo, 
+			output logic RopAIsReg,RopBIsReg,
 			output logic [1:0] FUNTYPE, FUNCODE,
 			output logic selWB, selMEMRD, selMEMWR, selCACHEWR, selCACHESH, selBRANCH,
 			input  forwardcollection _fwcollection 
@@ -62,7 +63,8 @@ module InstructionDecoder #(parameter bus = 32) (
 	assign selBRANCH = isBranch;
 	
 	//CMP distinc behavior: RD value is copied into RS in order to get the proper OPA and OPB for the comparison as the comparison is RD == RS and RD == Imm
-	assign RS = regWB?RSt:RDo;
+	assign RS = (regWB || selMEMRD ||selMEMWR)?RSt:RDo;
+	
 	
 	
 	//Select the right Imm extended to return according to the function
@@ -72,11 +74,11 @@ module InstructionDecoder #(parameter bus = 32) (
 	
 	logic [bus-1:0] pcOut;
 	
-	RegisterBank #(32, 4, 16) _regbank(RDwb,RS,RX,4'b1110, WBd, PCi, clk,WE,1'b1, STR_DATA_RB, OPAt,OPBt,RKo,pcOut);
+	RegisterBank #(32, 4, 16) _regbank(RDwb,RDo,RS,RX,4'b1110, WBd, PCi, clk,WE,1'b1, STR_DATA/*_RB*/, OPAt,OPBt,RKo,pcOut);
 	
 	ForwardUnit #(bus) _fw_unit(_fwcollection, RS,RX,OPAt,OPBt,	OpAFw,OpBFw);
 	
-	ForwardUnit #(bus) _fw_unit_cache(_fwcollection, RDo,RDo,STR_DATA_RB,STR_DATA_RB,	STR_DATA,STR_DATA_FW);
+	//ForwardUnit #(bus) _fw_unit_cache(_fwcollection, RDo,RDo,STR_DATA_RB,STR_DATA_RB,	STR_DATA,STR_DATA_FW);
 	
 	//flags for correct operand assignment
 	
@@ -89,9 +91,16 @@ module InstructionDecoder #(parameter bus = 32) (
 	
 	assign OPB = (selimm|selCACHEWR)?Imm:OpBFw;
 		
-		
+	assign RopAIsReg = ~isZero;
+	assign RopBIsReg = ~(selimm|selCACHEWR);
+	
+	assign RopA = isZero?4'd15:RS;
+	assign RopB = (selimm|selCACHEWR)?4'd15:RX;
+	
+	
 		
 	BranchUnit #(bus,bus) _branchUnit(PCi,OPB,selBRANCH,PCo);
 	
 	
 endmodule
+

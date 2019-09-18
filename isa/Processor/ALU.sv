@@ -7,15 +7,16 @@ mov: Set OPC to the value of OPB, perform via an ADD with OPA set to 0 from a pr
 module ALU #(parameter bus = 4) (input logic [bus-1:0] OPA, OPB, input logic [1:0] kernelsel, input logic [23:0] cache [0:2], input logic [1:0] FUNTYPE, FUNCODE, output logic [bus-1:0] result,output logic [3:0] CPSR, output logic [bus-1:0] operandB);
     //variable inits
     logic [bus-1:0] OPC, complement2;//, operandB;  //registers for the Adder
-    logic carryOut, selsub, selcmp, selc2, iszero; //signals for the Adder
+    logic carryOut, selsub, selcmp, selc2, iszero, selRegOp; //signals for the Adder
 		
 	 logic [bus-1:0] KernelUnitResult; //registers for Kernel
 	 //Kernel() _kernel(cache_in, ksel, KernelUnitResult); //UNCOMMENT THIS LINE TO HAVE A WORKING KERNEL IN EXECUTION
 	 
     //varible assignments for adder
+	 assign selRegOp = ~FUNTYPE[1] && ~FUNTYPE[0]; //00
     assign selsub = ~FUNCODE[1] && FUNCODE[0]; //01
     assign selcmp = FUNCODE[1] && FUNCODE[0]; //11. Bug FIX: funcode 10 by 11 
-    assign selc2 = selsub | selcmp; //two´s complement if it a substraction or comparation
+    assign selc2 = selRegOp && (selsub | selcmp); //two´s complement if it a substraction or comparation
     assign operandB = selc2?complement2:OPB; 
 
     //Complement 2 and Adder (for add, mov, sub, cmp)

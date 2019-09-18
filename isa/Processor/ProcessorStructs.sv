@@ -12,6 +12,10 @@ typedef struct packed{
 	logic [rbus-1:0] OPB;
 	logic [rbus-1:0] STR_DATA;
 	logic [rbus-1:0] RKo;
+	logic [3:0] RopA;
+	logic [3:0] RopB;
+	logic RopAIsReg;
+	logic RopBIsReg;
 	logic [3:0] RDo;
 	logic [1:0] FUNTYPE;
 	logic [1:0] FUNCODE;
