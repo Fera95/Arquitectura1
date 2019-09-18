@@ -39,6 +39,7 @@ module Processor_tb();
 	
 	clk = 1;
 	rst = 1;
+	pcDir = 32'b0;
 	//MOV R1,#15
 	//R1 = 15
 	instruction = 32'b0010_0001_0000_0000000000000001111_1;
@@ -55,12 +56,12 @@ module Processor_tb();
 	
 	
 	//MOV R5,R1
-	//R1 = 15
+	//R5 = 15
 	instruction = 32'b0010_0101_0000_0001_000000000000000_0;
 	#50;
 	
 	//MOV R5,#5
-	//R1 = 15
+	//R5 = 5
 	instruction = 32'b0010_0101_0000_0000_000000000000101_1;
 	#50;
 	
@@ -273,7 +274,7 @@ module Processor_tb();
 	
 	*/
 		instruction = 32'b0100_0001_0010_0011_0000000000000000;
-		pcDir = 32'b0;
+		
 		#50;
 	
 	 $display("ldr R1,[R2,R3]");

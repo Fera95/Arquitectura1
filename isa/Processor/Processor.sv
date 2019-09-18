@@ -148,7 +148,7 @@ module Processor
 	//Memory
 	
 	assign addressData = _execpipeo.ExecResult;
-	assign storeData = _execpipeo.operandB;
+	assign storeData = _execpipeo.STR_DATA;
 	assign MWE = _execpipeo.selMEMWR;
 	assign MRE = _execpipeo.selMEMRD;
 	
