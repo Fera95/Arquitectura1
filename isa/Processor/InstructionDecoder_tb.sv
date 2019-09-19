@@ -5,6 +5,7 @@ module InstructionDecoder_tb ();
 			logic [1:0] FUNTYPE, FUNCODE;
 			logic [3:0] RDwb;
 			logic WE, clk;
+			logic [3:0] CPSR;
 			logic [31:0] WBd, PCi;
 			logic [31:0] OPA, OPB, STR_DATA, PCo, RKo;
 			logic [3:0] RDo;
@@ -28,20 +29,21 @@ module InstructionDecoder_tb ();
 			
 			
 			*/
-			InstructionDecoder #(32) _DUT (instruction, WBd, PCi,RDwb,WE, clk, OPA, OPB, STR_DATA, PCo, RKo, RDo, FUNTYPE, FUNCODE, selWB, selMEMRD, selMEMWR, selCACHEWR, selCACHESH, selBRANCH);
+			InstructionDecoder #(32) _DUT (instruction, WBd, PCi,RDwb,WE, clk, CPSR, OPA, OPB, STR_DATA, PCo, RKo, RDo, FUNTYPE, FUNCODE, selWB, selMEMRD, selMEMWR, selCACHEWR, selCACHESH, selBRANCH);
 
 		
 			 /*Se prueban las instrucciones*/
 
 initial begin	
 	
-
+		
 		
 		RDwb = 4'b1000; //r8
 		WBd = 32'b00000000000000000000000000000011;
 		PCi = 32'b00000000000000000000000000001100;
 		WE = 1'b1;
-				
+		CPSR = 4'b0;
+		
 		instruction = 32'b00_00_0001_0001_0010_000000000000000_0;#100;//suma 
 	   $display("ADD");
   

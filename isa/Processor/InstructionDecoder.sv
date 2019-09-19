@@ -10,6 +10,7 @@ module InstructionDecoder #(parameter bus = 32) (
 			input logic [bus-1:0] WBd, PCi,
 			input logic [3:0] RDwb,
 			input logic WE, clk,
+			input logic [3:0] CPSR,
 			output logic [bus-1:0] OPA, OPB, STR_DATA, PCo, RKo, 
 			output logic [3:0] RopA,RopB,RDo, 
 			output logic RopAIsReg,RopBIsReg,
@@ -97,9 +98,10 @@ module InstructionDecoder #(parameter bus = 32) (
 	assign RopA = isZero?4'd15:RS;
 	assign RopB = (selimm|selCACHEWR)?4'd15:RX;
 	
-	
+	// check if its branch equal 
+	logic isBeq = selBRANCH && ~FUNCODE[1] && FUNCODE[0];
 		
-	BranchUnit #(bus,bus) _branchUnit(PCi,OPB,selBRANCH,PCo);
+	BranchUnit #(bus,bus) _branchUnit(PCi,OPB,selBRANCH, isBeq, PCo);
 	
 	
 endmodule

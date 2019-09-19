@@ -45,7 +45,7 @@ module Processor
 
 	//Decoding instruction
 	
-	InstructionDecoder #(rbus) _decoder(instructionp, WBd, PCi,RDwb,WE, clk, OPA, OPB, STR_DATA, PCo, RKo, RopA,RopB,RDo,RopAIsReg,RopBIsReg, FUNTYPE, FUNCODE, selWB, selMEMRD, selMEMWR, selCACHEWR, selCACHESH, selBRANCH,_fwcollection);
+	InstructionDecoder #(rbus) _decoder(instructionp, WBd, PCi,RDwb,WE, clk, CPSR, OPA, OPB, STR_DATA, PCo, RKo, RopA,RopB,RDo,RopAIsReg,RopBIsReg, FUNTYPE, FUNCODE, selWB, selMEMRD, selMEMWR, selCACHEWR, selCACHESH, selBRANCH,_fwcollection);
 	
 	assign PCi = pcDir;
 	assign PCout = PCo;
