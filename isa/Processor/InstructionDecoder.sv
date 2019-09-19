@@ -21,8 +21,8 @@ module InstructionDecoder #(parameter bus = 32) (
 
 	//Variables declaration for segments of the instruction
 	logic [3:0] RSt, RS, RX;
-	logic [bus-1:0] Imm4, Imm19, Imm28, Imm, OPAt, OPBt,OpAFw,OpBFw,STR_DATA_FW,STR_DATA_RB;
-	logic selimm,selCPRS;
+	logic [bus-1:0] Imm4, Imm19, Imm28, Imm, OPAt, OPBt,OpAFw,OpAFwSADD,OpBFw,STR_DATA_FW,STR_DATA_RB;
+	logic selimm,selsadd,selCPRS;
 	
 	//Assign the bit set to its variables
 	assign FUNTYPE  = instruction[31:30];
@@ -31,6 +31,7 @@ module InstructionDecoder #(parameter bus = 32) (
 	assign RSt = instruction[23:20];
 	assign RX = instruction[19:16];
 	assign selimm = instruction[0];
+	assign selsadd = instruction[1];
 	assign Imm4[3:0] = instruction[23:20];	
 	assign Imm19[18:0] = instruction[19:1];
 	assign Imm28[27:0] = instruction[27:0];
@@ -88,6 +89,13 @@ module InstructionDecoder #(parameter bus = 32) (
 	logic isMov, isZero;
 	assign isMov = isReg && FUNCODE[1] && ~FUNCODE[0];
 	assign isZero = isMov || isKernel;
+	
+	logic isSADD;
+	
+	assign isSADD = selsadd && ~selimm;
+	
+	
+	assign OpAFwSADD = isSADD? (OpAFw << 8): OpBFw;
 	
 	assign OPA = isZero?'0:OpAFw;
 	
