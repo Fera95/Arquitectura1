@@ -102,7 +102,7 @@ module InstructionDecoder #(parameter bus = 32) (
 	logic isBeq;
 	assign isBeq = selBRANCH && ~FUNCODE[1] && FUNCODE[0];
 		
-	BranchUnit #(bus,bus) _branchUnit(PCi,OPB,selBRANCH, isBeq, PCo);
+	BranchUnit #(bus,bus) _branchUnit(PCi,OPB,selBRANCH,isBeq, CPSR, PCo);
 	
 	
 endmodule
