@@ -1,5 +1,5 @@
 module DataMemory
-#(parameter filename = "zelda.hex")
+#(parameter filename = "color.vga.o")
 (
 	input logic clk,
 	input logic enable,

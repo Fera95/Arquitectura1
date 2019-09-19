@@ -36,7 +36,7 @@ logic clk, rst;
 	Se instanvia una memoria de 32 bits 
 	
 	
-	module ImageMemory
+	module DataMemory
 	#(parameter filename = "zelda.hex")
 	(
 	input logic clk,
