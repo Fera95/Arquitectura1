@@ -99,7 +99,8 @@ module InstructionDecoder #(parameter bus = 32) (
 	assign RopB = (selimm|selCACHEWR)?4'd15:RX;
 	
 	// check if its branch equal 
-	logic isBeq = selBRANCH && ~FUNCODE[1] && FUNCODE[0];
+	logic isBeq;
+	assign isBeq = selBRANCH && ~FUNCODE[1] && FUNCODE[0];
 		
 	BranchUnit #(bus,bus) _branchUnit(PCi,OPB,selBRANCH, isBeq, PCo);
 	
