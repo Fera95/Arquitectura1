@@ -10,6 +10,7 @@ module Branch_tb ();
 	(input logic [bus-1:0] PC, Operand,
 	input logic [1:0] FUNTYPE, FUNCODE, 
 	input logic [3:0] CPSR, 
+	
 	output logic [bus-1:0] jumpAddress, 
 	output logic NOP);
 	
@@ -29,8 +30,8 @@ initial begin
 		FUNCODE = 2'b01;
 		CPSR = 4'b0000;#100;
 	   $display("Poner nombre de prueba aquí");
-      //assert() $display("Poner nombre de prueba aquí/jumpAddress Correcto"); else $error("ERROR XX/jumpAddress");
-		//assert() $display("Poner nombre de prueba aquí/NOP Correcto"); else $error("ERROR XX/NOP");
+      $display(jumpAddress);
+		$display(NOP);
 		
 	
 end	

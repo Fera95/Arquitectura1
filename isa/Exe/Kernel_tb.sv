@@ -5,6 +5,16 @@ module Kernel_tb();
 	Kernel _k(cache_in,Ksel,kresult);
 
 	
+	/*
+	module Kernel
+	(
+	input  logic [23:0] cache_in [0:2],
+	input  logic [1:0]  ksel,
+	output logic [31:0] kresult
+	);
+	
+	*/
+	
 	initial begin
 	
 		//11	
