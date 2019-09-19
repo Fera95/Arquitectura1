@@ -72,7 +72,7 @@ logic clk, rst;
 	 */
 	
 	logic [14:0]address_mem;
-	assign address_mem = {1b'1,addressData} 
+	assign address_mem = {1'b1,addressData}; 
 	
 	Memory _mem(clk,1,MWE,MRE,address,storeData,loadedData);
 	

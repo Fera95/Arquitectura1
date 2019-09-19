@@ -1,5 +1,5 @@
 module Memory
-#(parameter filename = "zelda.hex", parameter filename2= "standopawa4.hex" )
+#(parameter filename = "zelda.hex", parameter filename2= "luigi.hex" )
 (
 	input logic clk,
 	input logic enable,
