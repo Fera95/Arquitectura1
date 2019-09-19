@@ -48,7 +48,6 @@ module InstructionDecoder #(parameter bus = 32) (
 	//intermediate flags: WB flag per funtype
 	
 	logic regWB, kerWB,  memWB;
-
 	assign regWB = isReg && (~FUNCODE[1] || ~FUNCODE[0]);  //only when is not CMP
 	assign memWB = isMem && ~FUNCODE[1] && ~FUNCODE[0];
 	assign kerWB = isKernel && ~FUNCODE[1] && ~FUNCODE[0];	
@@ -75,7 +74,9 @@ module InstructionDecoder #(parameter bus = 32) (
 	
 	logic [bus-1:0] pcOut;
 	
-	RegisterBank #(32, 4, 16) _regbank(RDwb,RDo,RS,RX,4'b1110, WBd, PCi, clk,WE,1'b1, STR_DATA/*_RB*/, OPAt,OPBt,RKo,pcOut);
+	logic isLKN;
+	
+	RegisterBank #(32, 4, 16) _regbank(RDwb,RDo,RS,RX,4'b1110, WBd, PCi, clk,WE,1'b1,isLKN, STR_DATA/*_RB*/, OPAt,OPBt,RKo,pcOut);
 	
 	ForwardUnit #(bus) _fw_unit(_fwcollection, RS,RX,OPAt,OPBt,	OpAFw,OpBFw);
 	
@@ -101,8 +102,15 @@ module InstructionDecoder #(parameter bus = 32) (
 	// check if its branch equal 
 	logic isBeq;
 	assign isBeq = selBRANCH && ~FUNCODE[1] && FUNCODE[0];
-		
+	
 	BranchUnit #(bus,bus) _branchUnit(PCi,OPB,selBRANCH,isBeq, CPSR, PCo);
+
+	//check if is LKN
+	
+	
+	
+	assign isLKN = isKernel && ~FUNCODE[1] && FUNCODE[0];
+	
 	
 	
 endmodule

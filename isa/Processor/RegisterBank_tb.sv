@@ -5,7 +5,7 @@ module RegisterBank_tb ();
 	
 	logic [3:0] RD,RS,RX,RK;
 	logic [31:0] WB,PCi;
-	logic clk,WE,RE;
+	logic clk,WE,RE,LKN;
 	
 	//Salida
 	
@@ -23,7 +23,7 @@ module RegisterBank_tb ();
 	*/
 
 	
-	 RegisterBank  dut(RD,RS,RX,RK,WB,PCi,clk,WE,RE,StrReg,RSd,RXd,RKd,PCo);
+	 RegisterBank  dut(RD,RS,RX,RK,WB,PCi,clk,WE,RE,LKN,StrReg,RSd,RXd,RKd,PCo);
 	
 	initial begin	
 	
