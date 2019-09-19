@@ -33,7 +33,7 @@ logic clk, rst;
 	Processor#(32,32,32) _proc(clk, rst,instruction,loadedData,pcDir,storeData,addressData,PCout,MWE,MRE);
 	
 	/*
-	Se instanvia una memoria de 32 bits 
+	Se instancia una memoria de 32 bits , de instrucciones
 	
 	
 	module DataMemory
@@ -48,17 +48,33 @@ logic clk, rst;
 	output logic [31:0] output_data
 		);
 	*/
-	
-	logic enable,write_enable,read_enable;
-	logic [13:0] address;
-	logic [31:0] input_data,output_data;
+
 	
 	
-	
-	DataMemory #("color.vga.o") _datamem(clk,enable,write_enable,read_enable,address,input_data,output_data);
+	DataMemory #("color.vga.o") _datamem(clk,1,0,MRE,PCout,storeData,loadedData);
+	 
+	 /*
+	 Se crean memoria de imagenes 
+	 
+	module Memory
+	#(parameter filename = "zelda.hex", parameter filename2= "standopawa4.hex" )
+	(
+	input logic clk,
+	input logic enable,
+	input logic write_enable,
+	input logic read_enable,
+	input logic [14:0] address,
+	input logic [15:0]input_data,
+	output logic [15:0] output_data
+	);
 	 
 	 
+	 */
 	
+	logic [14:0]address_mem;
+	assign address_mem = {1b'1,addressData} 
+	
+	Memory _mem(clk,1,MWE,MRE,address,storeData,loadedData);
 	
 	
 	initial begin
