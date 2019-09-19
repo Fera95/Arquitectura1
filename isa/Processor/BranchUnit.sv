@@ -8,7 +8,7 @@ module BranchUnit #(parameter mbus = 32, parameter rbus = 32)
 	 input  logic [rbus-1:0] branchImm,
 	 input  logic isBranch,
 	 input  logic isBeq,
-	 input  logic CPSR[3:0],
+	 input  logic [3:0] CPSR,
 	 output logic [mbus-1:0] nextBranch
 	);
 	
