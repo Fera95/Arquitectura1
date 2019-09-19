@@ -5,6 +5,19 @@ module CacheColor_tb();
 	logic [ 2:0] address;
 	logic [23:0] cache_out [0:2];
 
+	/*
+	module CacheColor
+	(
+		input  logic SH,
+		input  logic clk,
+		input  logic rst,
+		input  logic WE,
+		input  logic [31:0] di,
+		input  logic [31:0] address,
+		output logic [23:0] cache_out [0:2]
+	);
+	
+	*/
 	CacheColor _cach(SH,clk,rst,WE,di,address,cache_out);
 	
 	
